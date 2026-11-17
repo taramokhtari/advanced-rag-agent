@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.py[cod]
+
+.env
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+storage/chroma/
+.ipynb_checkpoints/
+
+*.log
