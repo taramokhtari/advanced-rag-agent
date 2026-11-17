@@ -31,3 +31,16 @@ async def search_products(
         limit=limit
     )
     return products
+
+@router.get("/", response_model=List[ProductResponse])
+async def get_all_products(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, ge=1, le=100),
+    db: Session = Depends(get_db)
+):
+    """دریافت فهرست محصولات برای نمایش در رابط کاربری."""
+    return ProductRepository.get_all_products(
+        db=db,
+        skip=skip,
+        limit=limit
+    )

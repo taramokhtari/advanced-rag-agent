@@ -12,3 +12,5 @@ storage/chroma/
 .ipynb_checkpoints/
 
 *.log
+# Backup files
+*.bak

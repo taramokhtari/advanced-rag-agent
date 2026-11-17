@@ -15,7 +15,9 @@ class ProductRepository:
         """
         جستجوی ساختاریافته محصولات با فیلترهای مشخص برای استفاده در ابزارهای ایجنت.
         """
-        query = db.query(Product)
+        query = db.query(Product).filter(
+            Product.verification_status == "verified"
+        )
 
         # فیلتر متنی روی نام یا توضیحات یا ترکیبات
         if keyword:
@@ -43,6 +45,16 @@ class ProductRepository:
             query = query.filter(Product.spf >= min_spf)
 
         return query.limit(limit).all()
+
+    @staticmethod
+    def get_all_products(db: Session, skip: int = 0, limit: int = 50):
+        return (
+            db.query(Product)
+            .order_by(Product.id.asc())
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
 
     @staticmethod
     def get_product_by_id(db: Session, product_id: int):

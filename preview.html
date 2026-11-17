@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROSE | Beauty & Skincare</title>
+
+<style>
+:root {
+    --bg: #38383c;
+    --surface: #29292d;
+    --surface2: #414146;
+    --card: #4b4b50;
+    --card2: #535359;
+    --text: #f4f0f1;
+    --muted: #bcb8bb;
+    --pink: #e5a0b3;
+    --pink-dark: #cf899f;
+    --border: #626268;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+button, input { font: inherit; }
+
+header {
+    height: 100px;
+    padding: 0 7%;
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.logo {
+    font-size: 24px;
+    letter-spacing: 6px;
+}
+
+.rose {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 65px;
+    height: 65px;
+}
+
+.rose svg { width: 100%; height: 100%; }
+
+nav { display: flex; gap: 30px; }
+
+nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+nav a:hover { color: var(--pink); }
+
+.hero {
+    min-height: 390px;
+    padding: 80px 20px;
+    background: var(--surface2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: clamp(34px, 5vw, 62px);
+    font-weight: 400;
+    letter-spacing: 6px;
+    margin-bottom: 22px;
+}
+
+.hero p {
+    color: var(--muted);
+    line-height: 2;
+    font-size: 14px;
+}
+
+.primary-button {
+    margin-top: 30px;
+    padding: 15px 35px;
+    background: var(--pink);
+    color: var(--surface);
+    border: 1px solid var(--pink);
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer;
+}
+
+.primary-button:hover {
+    background: transparent;
+    color: var(--pink);
+}
+
+.section { padding: 70px 7%; }
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.section-heading h2 {
+    font-weight: 400;
+    font-size: 23px;
+    letter-spacing: 4px;
+}
+
+.section-heading p {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.category {
+    background: var(--surface);
+    min-height: 100px;
+    display: grid;
+    place-items: center;
+    letter-spacing: 2px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: .2s;
+}
+
+.category:hover, .category.active {
+    border-color: var(--pink);
+    color: var(--pink);
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.search {
+    width: 320px;
+    max-width: 100%;
+    padding: 13px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    outline: none;
+}
+
+.search:focus { border-color: var(--pink); }
+
+.product-count {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.product {
+    background: var(--card);
+    padding: 13px;
+    transition: transform .2s;
+}
+
+.product:hover { transform: translateY(-4px); }
+
+.product-image {
+    height: 240px;
+    background: #39393e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa6aa;
+    letter-spacing: 2px;
+    font-size: 11px;
+    position: relative;
+}
+
+.product-tag {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--pink);
+    color: #29292d;
+    padding: 6px 9px;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+.product-info { padding: 17px 5px 8px; }
+
+.product-brand {
+    color: var(--pink);
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 9px;
+}
+
+.product h3 {
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 400;
+    min-height: 44px;
+}
+
+.product-description {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 9px 0 17px;
+    min-height: 40px;
+}
+
+.product-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.product-category {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.details-button {
+    background: transparent;
+    color: var(--pink);
+    border: 1px solid var(--pink);
+    padding: 9px 13px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.details-button:hover {
+    background: var(--pink);
+    color: var(--surface);
+}
+
+.empty {
+    display: none;
+    text-align: center;
+    color: var(--muted);
+    padding: 35px;
+}
+
+/* AI Assistant */
+.assistant-section {
+    background: var(--surface);
+    padding: 75px 7%;
+}
+
+.assistant-layout {
+    max-width: 1050px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 45px;
+    align-items: center;
+}
+
+.assistant-intro .eyebrow {
+    color: var(--pink);
+    letter-spacing: 3px;
+    font-size: 10px;
+    margin-bottom: 18px;
+}
+
+.assistant-intro h2 {
+    font-size: 35px;
+    font-weight: 400;
+    line-height: 1.35;
+    margin-bottom: 20px;
+}
+
+.assistant-intro p {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 13px;
+}
+
+.chat-box {
+    background: #414146;
+    border: 1px solid var(--border);
+    min-height: 430px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #91b69b;
+}
+
+.chat-header strong {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.chat-header small {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+.chat-messages {
+    padding: 20px;
+    flex: 1;
+    min-height: 270px;
+    max-height: 330px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.message {
+    max-width: 85%;
+    padding: 12px 15px;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.message.bot {
+    background: var(--card);
+    align-self: flex-start;
+}
+
+.message.user {
+    background: var(--pink);
+    color: #29292d;
+    align-self: flex-end;
+}
+
+.chat-form {
+    display: flex;
+    padding: 14px;
+    gap: 10px;
+    border-top: 1px solid var(--border);
+}
+
+.chat-form input {
+    min-width: 0;
+    flex: 1;
+    padding: 13px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: white;
+    outline: none;
+    font-size: 12px;
+}
+
+.chat-form input:focus { border-color: var(--pink); }
+
+.chat-form button {
+    padding: 0 20px;
+    border: none;
+    background: var(--pink);
+    color: var(--surface);
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 20px 16px;
+}
+
+.suggestion {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.suggestion:hover {
+    border-color: var(--pink);
+    color: var(--pink);
+}
+
+footer {
+    background: var(--surface);
+    padding: 35px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+@media (max-width: 800px) {
+    nav { gap: 12px; }
+    nav a { font-size: 9px; }
+    .products { grid-template-columns: repeat(2, 1fr); }
+    .assistant-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 550px) {
+    header { height: 85px; }
+    nav { display: none; }
+    .rose { width: 55px; height: 55px; }
+    .categories { grid-template-columns: repeat(2, 1fr); }
+    .products { grid-template-columns: 1fr; }
+    .toolbar { align-items: stretch; flex-direction: column; }
+    .search { width: 100%; }
+    .hero h1 { letter-spacing: 3px; }
+}
+
+/* Floating AI launcher */
+.ai-launcher {
+    position: fixed;
+    right: 26px;
+    bottom: 26px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 15px 21px;
+    border: 1px solid #e5a0b3;
+    background: #e5a0b3;
+    color: #29292d;
+    cursor: pointer;
+    box-shadow: 0 8px 28px rgba(0,0,0,.35);
+    transition: .25s;
+    font-size: 11px;
+    letter-spacing: 1.8px;
+    font-weight: bold;
+}
+
+.ai-launcher:hover {
+    background: #29292d;
+    color: #e5a0b3;
+    transform: translateY(-4px);
+}
+
+.ai-launcher .chat-icon {
+    font-size: 19px;
+}
+
+.ai-launcher .online-dot {
+    width: 8px;
+    height: 8px;
+    background: #527b5c;
+    border-radius: 50%;
+}
+
+nav a.ai-nav-link {
+    color: #e5a0b3;
+    border: 1px solid #e5a0b3;
+    padding: 10px 13px;
+    margin-top: -10px;
+}
+
+@media (max-width: 550px) {
+    .ai-launcher {
+        right: 16px;
+        bottom: 16px;
+        padding: 14px 17px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">ROSE</div>
+
+    <div class="rose">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#e5a0b3" d="
+                M49 5 C57 5 64 12 69 17
+                C77 12 87 17 88 27
+                C99 31 100 43 93 51
+                C100 62 94 74 84 78
+                C83 91 70 97 59 90
+                C51 100 37 98 31 89
+                C18 94 7 84 11 72
+                C1 64 4 50 13 44
+                C9 31 18 21 29 22
+                C34 11 41 5 49 5 Z"/>
+            <path fill="#38383c" d="
+                M49 23 C39 19 29 27 30 38
+                C31 47 39 52 47 48
+                C55 44 55 34 47 31
+                C41 29 37 35 40 40
+                C42 43 46 42 47 39
+                C50 46 42 51 35 47
+                C25 42 25 29 34 22
+                C39 19 45 20 49 23 Z
+                M55 24 C69 19 80 28 78 41
+                C77 52 67 59 56 65
+                C47 70 43 77 49 85
+                C34 83 27 71 31 61
+                C35 52 46 51 54 45
+                C65 36 61 27 55 24 Z
+                M18 48 C9 60 17 78 31 82
+                C23 71 23 59 31 49
+                C27 52 22 51 18 48 Z
+                M69 54 C84 59 86 74 76 83
+                C69 89 60 89 53 87
+                C70 80 75 68 69 54 Z"/>
+        </svg>
+    </div>
+
+    <nav>
+        <a href="#home">HOME</a>
+        <a href="#products">SHOP</a>
+        <a href="#categories">CATEGORIES</a>
+        <a href="#assistant" class="ai-nav-link">AI ASSISTANT ✦</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h1>YOUR BEAUTY, YOUR WAY</h1>
+    <p>
+        Discover skincare products that fit your needs.
+        <br>
+        Find your routine with your personal AI beauty assistant.
+    </p>
+    <button class="primary-button"
+        onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+        EXPLORE PRODUCTS
+    </button>
+</section>
+
+<section class="section" id="categories">
+    <div class="section-heading">
+        <h2>EXPLORE CATEGORIES</h2>
+        <p>Find the right products for your daily routine</p>
+    </div>
+
+    <div class="categories">
+        <div class="category active" data-filter="all">ALL PRODUCTS</div>
+        <div class="category" data-filter="sunscreen">SUNSCREEN</div>
+        <div class="category" data-filter="skincare">SKINCARE</div>
+        <div class="category" data-filter="cleanser">CLEANSERS</div>
+    </div>
+</section>
+
+<section class="section" id="products">
+    <div class="section-heading">
+        <h2>OUR PRODUCTS</h2>
+        <p>Explore our skincare and sun protection collection</p>
+    </div>
+
+    <div class="toolbar">
+        <input class="search" id="searchInput"
+            type="search" placeholder="Search products...">
+        <span class="product-count" id="productCount">3 PRODUCTS</span>
+    </div>
+
+    <div class="products" id="productGrid">
+
+        <article class="product" data-category="sunscreen"
+            data-name="Anthelios UVMune 400 Invisible Fluid SPF 50+">
+            <div class="product-image">
+                <span class="product-tag">SUNSCREEN</span>
+                PRODUCT IMAGE
+            </div>
+            <div class="product-info">
+                <div class="product-brand">LA ROCHE-POSAY</div>
+                <h3>Anthelios UVMune 400 Invisible Fluid SPF 50+</h3>
+                <p class="product-description">
+                    Lightweight facial sunscreen with very high sun protection.
+                </p>
+                <div class="product-bottom">
+                    <span class="product-category">SPF 50+</span>
+                    <button class="details-button"
+                        onclick="askAbout('Anthelios UVMune 400 Invisible Fluid SPF 50+')">
+                        ASK AI
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <article class="product" data-category="sunscreen skincare"
+            data-name="Hyaluronic Acid Watery Sun Gel SPF 50+">
+            <div class="product-image">
+                <span class="product-tag">SUNSCREEN</span>
+                PRODUCT IMAGE
+            </div>
+            <div class="product-info">
+                <div class="product-brand">ISNTREE</div>
+                <h3>Hyaluronic Acid Watery Sun Gel SPF 50+</h3>
+                <p class="product-description">
+                    Hydrating sun gel with a lightweight texture.
+                </p>
+                <div class="product-bottom">
+                    <span class="product-category">SPF 50+</span>
+                    <button class="details-button"
+                        onclick="askAbout('Hyaluronic Acid Watery Sun Gel SPF 50+')">
+                        ASK AI
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <article class="product" data-category="sunscreen skincare"
+            data-name="Relief Sun Rice Probiotics SPF 50+">
+            <div class="product-image">
+                <span class="product-tag">SUNSCREEN</span>
+                PRODUCT IMAGE
+            </div>
+            <div class="product-info">
+                <div class="product-brand">BEAUTY OF JOSEON</div>
+                <h3>Relief Sun: Rice + Probiotics SPF 50+</h3>
+                <p class="product-description">
+                    Daily sunscreen with a comfortable cream texture.
+                </p>
+                <div class="product-bottom">
+                    <span class="product-category">SPF 50+</span>
+                    <button class="details-button"
+                        onclick="askAbout('Relief Sun Rice + Probiotics SPF 50+')">
+                        ASK AI
+                    </button>
+                </div>
+            </div>
+        </article>
+
+    </div>
+
+    <div class="empty" id="emptyMessage">
+        No products found. Try another search.
+    </div>
+</section>
+
+<section class="assistant-section" id="assistant">
+    <div class="assistant-layout">
+
+        <div class="assistant-intro">
+            <div class="eyebrow">YOUR PERSONAL BEAUTY ASSISTANT</div>
+            <h2>LET AI HELP YOU FIND YOUR PERFECT ROUTINE.</h2>
+            <p>
+                Tell us about your skin type, concerns and preferences.
+                Our AI beauty assistant can help you explore products
+                and find suitable skincare options.
+            </p>
+        </div>
+
+        <div class="chat-box">
+            <div class="chat-header">
+                <span class="status-dot"></span>
+                <div>
+                    <strong>ROSE AI ASSISTANT</strong>
+                    <small>Beauty & Skincare Support</small>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot">
+                    Hello! Welcome to ROSE. 🌸
+                    <br>
+                    I can help you discover skincare products.
+                    What would you like to know?
+                </div>
+            </div>
+
+            <div class="suggestions">
+                <button class="suggestion"
+                    onclick="sendSuggestion('I have oily skin. Recommend a sunscreen.')">
+                    Sunscreen for oily skin
+                </button>
+                <button class="suggestion"
+                    onclick="sendSuggestion('I need a hydrating skincare product.')">
+                    Hydrating skincare
+                </button>
+            </div>
+
+            <form class="chat-form" id="chatForm">
+                <input id="chatInput" type="text"
+                    placeholder="Ask me about skincare..." autocomplete="off">
+                <button type="submit">SEND</button>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    ROSE BEAUTY — YOUR PERSONAL BEAUTY ASSISTANT
+</footer>
+
+<script>
+const searchInput = document.getElementById("searchInput");
+const productCards = [...document.querySelectorAll(".product")];
+const categoryButtons = [...document.querySelectorAll(".category")];
+const productCount = document.getElementById("productCount");
+const emptyMessage = document.getElementById("emptyMessage");
+
+let activeFilter = "all";
+
+function filterProducts() {
+    const query = searchInput.value.toLowerCase().trim();
+    let visible = 0;
+
+    productCards.forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        const category = card.dataset.category;
+        const matchesSearch = name.includes(query);
+        const matchesCategory =
+            activeFilter === "all" || category.includes(activeFilter);
+
+        const show = matchesSearch && matchesCategory;
+        card.style.display = show ? "" : "none";
+
+        if (show) visible++;
+    });
+
+    productCount.textContent = visible + " PRODUCTS";
+    emptyMessage.style.display = visible ? "none" : "block";
+}
+
+searchInput.addEventListener("input", filterProducts);
+
+categoryButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        categoryButtons.forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        activeFilter = button.dataset.filter;
+        filterProducts();
+    });
+});
+
+const chatForm = document.getElementById("chatForm");
+const chatInput = document.getElementById("chatInput");
+const chatMessages = document.getElementById("chatMessages");
+
+function addMessage(text, type) {
+    const message = document.createElement("div");
+    message.className = "message " + type;
+    message.textContent = text;
+    chatMessages.appendChild(message);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function sendSuggestion(text) {
+    chatInput.value = text;
+    chatForm.requestSubmit();
+}
+
+function askAbout(product) {
+    document.getElementById("assistant").scrollIntoView({behavior: "smooth"});
+    chatInput.value = "Tell me about " + product;
+    chatForm.requestSubmit();
+}
+
+chatForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    addMessage(text, "user");
+    chatInput.value = "";
+
+    // Temporary demo response.
+    // This will be replaced with the real FastAPI /api/chat connection.
+    setTimeout(() => {
+        addMessage(
+            "Thanks for your question! The ROSE AI assistant interface is ready. The next step is connecting it to the project's FastAPI agent so it can search the real product database and provide personalized recommendations.",
+            "bot"
+        );
+    }, 500);
+});
+
+document.getElementById("aiLauncher").addEventListener("click", () => {
+    const assistant = document.getElementById("assistant");
+    assistant.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    setTimeout(() => {
+        document.getElementById("chatInput").focus();
+    }, 650);
+});
+
+</script>
+
+
+<button class="ai-launcher" id="aiLauncher"
+        aria-label="Open AI Beauty Assistant">
+    <span class="chat-icon">✦</span>
+    <span>CHAT WITH AI</span>
+    <span class="online-dot"></span>
+</button>
+
+</body>
+</html>

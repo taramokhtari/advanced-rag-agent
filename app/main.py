@@ -1,18 +1,24 @@
 from fastapi import FastAPI
-from app.api.routes import products
+
+from app.api.routes import products, product_sources, chat
 
 app = FastAPI(
     title="AI-Powered Beauty Shopping Assistant API",
     version="1.0.0",
-    description="Backend API for AI Beauty Assistant using FastAPI, PostgreSQL, and ChromaDB."
+    description=(
+        "Persian AI Beauty Shopping Assistant "
+        "powered by Ollama, PostgreSQL, and ChromaDB."
+    ),
 )
 
-# ثبت روترها
 app.include_router(products.router)
+app.include_router(product_sources.router)
+app.include_router(chat.router)
+
 
 @app.get("/")
 def read_root():
     return {
-        "message": "Welcome to AI Beauty Shopping Assistant API!",
-        "status": "active"
+        "message": "دستیار هوشمند فروشگاه زیبایی فعال است.",
+        "status": "active",
     }
