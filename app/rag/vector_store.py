@@ -13,7 +13,7 @@ class BGEEmbeddingFunction(chromadb.EmbeddingFunction):
 
     def __init__(
         self,
-        base_url: str = "http://172.21.176.1:11434",
+        base_url: str = settings.OLLAMA_BASE_URL,
         model: str = "bge-m3",
     ):
         self.base_url = base_url.rstrip("/")

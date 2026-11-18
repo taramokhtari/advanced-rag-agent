@@ -3,23 +3,36 @@ services:
     image: postgres:17
     container_name: beauty_postgres
     restart: unless-stopped
-
     environment:
       POSTGRES_DB: beauty_shop
       POSTGRES_USER: beauty_user
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
-
     ports:
       - "5432:5432"
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U beauty_user -d beauty_shop"]
       interval: 5s
       timeout: 5s
       retries: 5
 
+  api:
+    build: .
+    container_name: beauty_api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://beauty_user:${POSTGRES_PASSWORD}@postgres:5432/beauty_shop
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/app/storage/chroma
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   postgres_data:
+  chroma_data:
